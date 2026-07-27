@@ -1,252 +1,279 @@
 /*
- * Tour data — generated from the source walkthrough video
- * (Pixel 0.5x ultrawide, 264 s, analyzed frame-by-frame).
+ * Tour data — generated from the source walkthrough video and cross-referenced
+ * with public records for 257-261 Andover St, San Francisco (3-unit Victorian,
+ * built 1906; this is the top-floor flat, listed at ~1,320 sq ft).
  *
- * Coordinate system (feet): x = 0 at the west wall growing east,
- * y = 0 at the rear (deck side) wall growing toward the street.
- * The deck extends to negative y. yaw: 0=east, 90=street/front,
- * 180=west, 270=rear/deck.
+ * Coordinate system (feet): x = 0 at the Andover St (west) facade growing
+ * toward the rear (east); y = 0 at the north side wall growing south.
+ * The building is L-shaped: the kitchen/dining wing extends ~8.5 ft deeper
+ * than the living room's rear wall, and the roof deck fills the notch at the
+ * rear north-east corner. yaw: 0=east/rear, 90=south, 180=west/street, 270=north.
  */
 window.TOUR = {
-  title: 'Renovated Top-Floor Apartment',
+  title: 'Renovated Top-Floor Victorian Flat',
   start: 'entry',
   planNote:
-    'All dimensions are estimates reconstructed from a handheld video walkthrough ' +
-    '(Pixel 0.5× ultrawide, ≈123° FOV), calibrated against standard-size elements ' +
-    '(30″ doors, 27″ washer/dryer, 30″ range, stair treads). Expect roughly ±6–12″ on any span. ' +
-    'Top of plan = rear of the house (deck & backyard); bottom = street side. ' +
-    'Gross interior ≈ 890 sq ft, plus ≈ 70 sq ft deck.',
+    'Reconstructed from the walkthrough video, cross-referenced with public records for the ' +
+    'building (3-unit Victorian, built 1906; top-floor flat listed ≈1,320 sq ft — a figure that ' +
+    'likely includes the stair envelope and under-eave storage). The footprint is not a simple ' +
+    'rectangle: the kitchen/dining wing runs ~8.5 ft deeper than the living room wall, the roof ' +
+    'deck fills the L-notch at the rear corner, and the attic roofline pulls usable space in ' +
+    'behind knee walls (hatched “low eave” zones). Left = Andover Street; the sun-lit bedroom and ' +
+    'bath windows face the street (WSW), the big vista windows face north over the downhill ' +
+    'neighbor’s roof, and the peek-a-boo water views are from the rear living/dining windows. ' +
+    'Dimensions are estimates from the ultrawide footage calibrated against standard-size ' +
+    'elements (30″ doors, 27″ laundry pair, 30″ range, stair treads); expect ±6–12″ on any span.',
 
   plan: {
-    bounds: { x0: -1, y0: -8.6, w: 24.5, h: 49.3 },
+    bounds: { x0: -3.4, y0: -3.2, w: 61.5, h: 30 },
     wallThickness: 0.45,
 
     rooms: [
-      { id: 'living',   name: 'Living Room', poly: [[0.5,0.5],[15.5,0.5],[15.5,11],[0.5,11]], labelPos: [7.5,5.2], area: '≈ 150 sq ft' },
-      { id: 'dining',   name: 'Dining',      poly: [[15.5,0.5],[22,0.5],[22,8],[15.5,8]],     labelPos: [19,4.2] },
-      { id: 'kitchen',  name: 'Kitchen',     poly: [[15.5,8],[22,8],[22,17.5],[15.5,17.5]],   labelPos: [19,11.6], area: '≈ 110 sq ft' },
-      { id: 'pantry',   name: 'Pantry',      poly: [[19,14.5],[22,14.5],[22,17.5],[19,17.5]], labelPos: [20.5,16.3] },
-      { id: 'stairs',   name: '',            poly: [[9.5,11],[13,11],[13,20],[9.5,20]], fill: '#e5e1d6' },
-      { id: 'landing',  name: 'Landing',     poly: [[13,11],[15.5,11],[15.5,20],[13,20]], labelPos: [14.25,15.6], fill: '#ece8de' },
-      { id: 'hall',     name: 'Hall',        poly: [[8,20],[15.5,20],[15.5,30.5],[12.5,30.5],[12.5,23],[8,23]], labelPos: [14,27.6], fill: '#ece8de' },
-      { id: 'laundry',  name: '',            poly: [[15.5,17.5],[18.5,17.5],[18.5,20.5],[15.5,20.5]] },
-      { id: 'bath',     name: 'Bath',        poly: [[15.5,20.5],[22,20.5],[22,26],[15.5,26]], labelPos: [18.6,22.6], area: '≈ 36 sq ft' },
-      { id: 'bed2',     name: 'Bedroom 2',   poly: [[0.5,11],[9.5,11],[9.5,20],[8,20],[8,23],[0.5,23]], labelPos: [4.8,17.2], area: '≈ 100 sq ft' },
-      { id: 'bed3',     name: 'Bedroom 3',   poly: [[0.5,23],[12.5,23],[12.5,30.5],[0.5,30.5]], labelPos: [6.2,26.2], area: '≈ 90 sq ft' },
-      { id: 'frontbed', name: 'Bedroom 1',   poly: [[3,30.5],[15.5,30.5],[15.5,39],[3,39]], labelPos: [9.2,34.2], area: '≈ 105 sq ft' },
-      { id: 'deck',     name: 'Deck',        poly: [[5.5,-7.5],[14.5,-7.5],[14.5,0],[5.5,0]], labelPos: [10,-3.6], area: '≈ 70 sq ft', fill: '#e9e5da' },
+      { id: 'frontbed', name: 'Bedroom 1', poly: [[0.5,0.5],[11,0.5],[11,13.5],[0.5,13.5]], labelPos: [5.7,7.4], area: '≈ 145 sq ft' },
+      { id: 'bed3',     name: 'Bedroom 3', poly: [[12,0.5],[22,0.5],[22,13.5],[12,13.5]], labelPos: [17,7.4], area: '≈ 125 sq ft' },
+      { id: 'living',   name: 'Living Room', poly: [[22,0.5],[45.5,0.5],[45.5,11.5],[38,11.5],[38,11],[25,11],[25,7],[22,7]], labelPos: [32.5,3.9], area: '≈ 200 sq ft' },
+      { id: 'hall',     name: 'Hall', poly: [[7.5,13.5],[22,13.5],[22,7],[25,7],[25,16.5],[7.5,16.5]], labelPos: [16.5,15.15], fill: '#ece8de' },
+      { id: 'stairs',   name: '', poly: [[25,11],[38,11],[38,14.5],[25,14.5]], fill: '#e5e1d6' },
+      { id: 'bath',     name: 'Bath', poly: [[0.5,16.5],[11.5,16.5],[11.5,22.5],[0.5,22.5]], labelPos: [5.7,19.9], area: '≈ 60 sq ft' },
+      { id: 'laundry',  name: '', poly: [[11.5,16.5],[14.5,16.5],[14.5,20],[11.5,20]] },
+      { id: 'bed2',     name: 'Bedroom 2', poly: [[25,14.5],[38,14.5],[38,22.5],[25,22.5]], labelPos: [31.5,18], area: '≈ 105 sq ft' },
+      { id: 'kitchen',  name: 'Kitchen', poly: [[38,11.5],[46.5,11.5],[46.5,22.5],[38,22.5]], labelPos: [43.3,17.6], area: '≈ 95 sq ft' },
+      { id: 'dining',   name: 'Dining', poly: [[46.5,11.5],[54,11.5],[54,22.5],[46.5,22.5]], labelPos: [50.2,16.6], area: '≈ 80 sq ft' },
+      { id: 'pantry',   name: '', poly: [[38,15.5],[40.5,15.5],[40.5,18.5],[38,18.5]] },
+      { id: 'deck',     name: 'Deck', poly: [[45.5,0.5],[53.5,0.5],[53.5,11],[45.5,11]], labelPos: [49.5,5.4], area: '≈ 80 sq ft', fill: '#e9e5da' },
     ],
 
     walls: [
-      // exterior envelope
-      [[0,0],[22.5,0]], [[22.5,0],[22.5,39.5]], [[22.5,39.5],[0,39.5]], [[0,39.5],[0,0]],
-      // living / kitchen partition (pass-through peninsula between)
-      [[15.5,0.5],[15.5,2]],
-      // living / bedroom 2
-      [[0.5,11],[9.5,11]],
-      // bedroom 2 east + vestibule
-      [[9.5,11],[9.5,20]], [[8,20],[9.5,20]], [[8,20],[8,23]],
-      // bedroom 2 / bedroom 3
-      [[0.5,23],[12.5,23]],
-      // hall / bedroom 3
-      [[12.5,23],[12.5,30.5]],
-      // bedroom 3 & hall / front bedroom
-      [[0.5,30.5],[15.5,30.5]],
-      // front bedroom / SE eave
-      [[15.5,30.5],[15.5,39.5]],
-      // kitchen west (off the landing walk)
-      [[15.5,11],[15.5,17.5]],
-      // laundry
-      [[15.5,17.5],[22,17.5]], [[15.5,17.5],[15.5,20.5]],
-      // bath
-      [[15.5,20.5],[22,20.5]], [[15.5,20.5],[15.5,26]], [[15.5,26],[22,26]],
+      // exterior — L-shaped envelope (deck is open-air in the NE notch)
+      [[0,0],[45.5,0]],                       // north wall, main block
+      [[45.5,0],[45.5,11.5]],                 // living rear wall (deck door + windows)
+      [[45.5,11.5],[54,11.5]],                // wing north wall (faces the deck)
+      [[54,11.5],[54,23]],                    // wing rear (east) wall
+      [[54,23],[0,23]],                       // south wall
+      [[0,23],[0,0]],                         // west facade on Andover St
+      // bedroom 1 / bedroom 3
+      [[11.5,0],[11.5,13.5]],
+      // hall north wall (bedroom doors punched by door defs)
+      [[0,13.5],[11.5,13.5]],
+      [[11.5,13.5],[22,13.5]],
+      // bedroom 3 / living
+      [[22,0],[22,13.5]],
+      // bath + laundry north wall on the hall
+      [[0,16.5],[14.5,16.5]],
+      // bath / laundry divider, laundry east + south
+      [[11.5,16.5],[11.5,22.5]],
+      [[14.5,16.5],[14.5,20]],
+      [[11.5,20],[14.5,20]],
+      // pocket / south eave
+      [[22,16.5],[25,16.5]],
+      // bedroom 2 west wall (door to the pocket punched by door def)
+      [[25,14.5],[25,23]],
+      // stairwell south = bedroom 2 north
+      [[25,14.5],[38,14.5]],
+      // wing west wall (stair side + bedroom 2 east)
+      [[38,11.5],[38,14.5]],
+      [[38,14.5],[38,23]],
+      // pass-through wall stubs (peninsula counter spans the opening)
+      [[38,11.5],[39,11.5]],
+      [[45,11.5],[45.5,11.5]],
       // pantry
-      [[19,14.5],[19,17.5]], [[19,14.5],[22,14.5]],
+      [[38,15.5],[40.5,15.5]],
+      [[38,18.5],[40.5,18.5]],
+      [[40.5,15.5],[40.5,18.5]],
     ],
 
     doors: [
-      { hinge: [7.6,0],      angle: 0,   swing: 90,  width: 2.4 },  // deck door
-      { hinge: [15.5,14],    angle: 270, swing: 90,  width: 2   },  // landing -> kitchen
-      { hinge: [15.5,18.2],  angle: 90,  swing: -90, width: 2   },  // laundry
-      { hinge: [15.5,23.3],  angle: 270, swing: 90,  width: 2.3 },  // bath
-      { hinge: [8,22.5],     angle: 270, swing: -90, width: 2   },  // bedroom 2
-      { hinge: [12.5,24],    angle: 90,  swing: 90,  width: 2.5 },  // bedroom 3
-      { hinge: [13,30.5],    angle: 0,   swing: 90,  width: 2.4 },  // front bedroom
-      { hinge: [19.4,14.5],  angle: 0,   swing: 90,  width: 2   },  // pantry
+      { hinge: [9,13.5],    angle: 0,  swing: -90, width: 2.2 },  // bedroom 1 (end of hall, right)
+      { hinge: [18,13.5],   angle: 0,  swing: -90, width: 2.2 },  // bedroom 3 (mid-hall, north side)
+      { hinge: [8,16.5],    angle: 0,  swing: 90,  width: 2.1 },  // bath (end of hall, left)
+      { hinge: [11.8,16.5], angle: 0,  swing: 90,  width: 2.0 },  // laundry
+      { hinge: [25,15.1],   angle: 90, swing: -90, width: 2.1 },  // bedroom 2 (off the pocket)
+      { hinge: [40.5,16.1], angle: 90, swing: -90, width: 2.0 },  // pantry
+      { hinge: [45.5,5],    angle: 90, swing: 90,  width: 2.4 },  // deck door
     ],
 
     windows: [
-      [[3.5,0],[5.5,0]], [[11,0],[13,0]],       // living, rear
-      [[16.5,0],[18.5,0]],                       // dining, rear
-      [[22.5,4],[22.5,6.5]],                     // dining, east
-      [[22.5,21.5],[22.5,24]],                   // bath, east
-      [[8,39.5],[11,39.5]],                      // front bedroom, street
-      [[0,15],[0,17.5]],                         // bedroom 2, west (slider)
-      [[0,25],[0,27.5]],                         // bedroom 3, west
+      [[0,4],[0,8]],                    // bedroom 1 — street (WSW sun)
+      [[0,18],[0,20.5]],                // bath — street (the 4pm sunbeam)
+      [[15,0],[18,0]],                  // bedroom 3 — north vista
+      [[29.5,0],[32,0]],                // living — north
+      [[45.5,1.5],[45.5,4]],            // living — rear, beside deck door
+      [[45.5,8],[45.5,10.5]],           // living — rear
+      [[47.5,11.5],[51.5,11.5]],        // dining — onto the deck
+      [[54,14],[54,17]],                // dining — rear east (water peek)
+      [[31,23],[34,23]],                // bedroom 2 — south slider (close neighbor)
     ],
 
     fixtures: [
-      // kitchen peninsula with sink + dishwasher (pass-through above)
-      { type: 'rect', x: 15.5, y: 2, w: 1.8, h: 7.5 },
-      { type: 'rect', x: 15.75, y: 3.4, w: 1.2, h: 1.4 },
-      // appliance run on the kitchen's south wall
-      { type: 'rect', x: 15.7, y: 16, w: 2.6, h: 1.4, label: 'Ref' },
-      { type: 'rect', x: 18.4, y: 16, w: 2.5, h: 1.4, label: 'Rng' },
+      // kitchen peninsula with sink + dishwasher under the pass-through
+      { type: 'rect', x: 39, y: 11.7, w: 6, h: 1.9 },
+      { type: 'rect', x: 41, y: 12, w: 1.3, h: 1.3 },
+      // appliance run along the kitchen's south wall
+      { type: 'rect', x: 38.6, y: 21, w: 2.6, h: 1.4, label: 'Ref' },
+      { type: 'rect', x: 41.4, y: 21, w: 2.5, h: 1.4, label: 'Rng' },
       // laundry pair
-      { type: 'rect', x: 16, y: 18, w: 2.3, h: 2.2, label: 'W/D' },
-      // bath: shower, pedestal sink, toilet
-      { type: 'rect', x: 16.3, y: 24.5, w: 5, h: 1.5, label: 'Shower', ly: 25.25 },
-      { type: 'circle', cx: 16.6, cy: 21.9, r: 0.7 },
-      { type: 'rect', x: 20.7, y: 21.3, w: 1.2, h: 1.5 },
+      { type: 'rect', x: 11.8, y: 17, w: 2.3, h: 2.4, label: 'W/D', ly: 21 },
+      // bath: shower along the south wall, pedestal sink, toilet by the street window
+      { type: 'rect', x: 3, y: 21, w: 5, h: 1.5, label: 'Shower', ly: 21.75 },
+      { type: 'circle', cx: 8.6, cy: 17.6, r: 0.7 },
+      { type: 'rect', x: 1, y: 17.2, w: 1.3, h: 1.6 },
       // closets
-      { type: 'rect', x: 3.2, y: 31, w: 1.8, h: 5, label: 'CL' },     // bedroom 1 (louvered)
-      { type: 'rect', x: 9.6, y: 23.2, w: 2.7, h: 1.5, label: 'CL' }, // bedroom 3
-      { type: 'rect', x: 2.5, y: 11.2, w: 4, h: 1.3, label: 'CL' },   // bedroom 2
-      // bedroom 2 under-eave shelved storage
-      { type: 'rect', x: 0.6, y: 13, w: 1.4, h: 6, label: '' },
-      // skylights (drawn as thin outlines)
-      { type: 'rect', x: 10, y: 13, w: 2.6, h: 3 },
-      { type: 'circle', cx: 11.3, cy: 14.5, r: 0.01, label: 'skylight' },
-      { type: 'rect', x: 2.4, y: 13.6, w: 2.2, h: 1.9 },
-      // stair treads + label
-      { type: 'poly', pts: [[9.7,12.4],[12.8,12.4]] },
-      { type: 'poly', pts: [[9.7,13.6],[12.8,13.6]] },
-      { type: 'poly', pts: [[9.7,14.8],[12.8,14.8]] },
-      { type: 'poly', pts: [[9.7,16],[12.8,16]] },
-      { type: 'poly', pts: [[9.7,17.2],[12.8,17.2]] },
-      { type: 'poly', pts: [[9.7,18.4],[12.8,18.4]] },
-      { type: 'poly', pts: [[9.7,19.6],[12.8,19.6]] },
-      { type: 'circle', cx: 11.25, cy: 18, r: 0.01, label: 'DN ↓ entry' },
-      // stair opening guard rail
-      { type: 'rect', x: 12.9, y: 11, w: 0.15, h: 9 },
+      { type: 'rect', x: 1.5, y: 0.7, w: 6.5, h: 1.6, label: 'CL' },   // bedroom 1 louvered
+      { type: 'rect', x: 20.2, y: 1, w: 1.6, h: 5, label: 'CL' },      // bedroom 3
+      { type: 'rect', x: 25.3, y: 21.2, w: 8, h: 1.1, label: 'eave storage' }, // bedroom 2 knee-wall shelves
+      // skylights (thin outlines)
+      { type: 'rect', x: 29.5, y: 11.3, w: 3.5, h: 3 },
+      { type: 'circle', cx: 32.2, cy: 11.8, r: 0.01, label: 'skylight' },
+      { type: 'rect', x: 28.5, y: 19, w: 2.6, h: 2 },
+      { type: 'rect', x: 4, y: 2.8, w: 2.6, h: 2 },
+      // stair treads + labels
+      { type: 'poly', pts: [[26.2,11],[26.2,14.5]] },
+      { type: 'poly', pts: [[27.4,11],[27.4,14.5]] },
+      { type: 'poly', pts: [[28.6,11],[28.6,14.5]] },
+      { type: 'poly', pts: [[29.8,11],[29.8,14.5]] },
+      { type: 'poly', pts: [[31,11],[31,14.5]] },
+      { type: 'poly', pts: [[32.2,11],[32.2,14.5]] },
+      { type: 'poly', pts: [[33.4,11],[33.4,14.5]] },
+      { type: 'poly', pts: [[34.6,11],[34.6,14.5]] },
+      { type: 'poly', pts: [[35.8,11],[35.8,14.5]] },
+      { type: 'poly', pts: [[37,11],[37,14.5]] },
+      { type: 'circle', cx: 31.5, cy: 13, r: 0.01, label: '' },
+      { type: 'circle', cx: 28.2, cy: 13.8, r: 0.01, label: 'DN → street entry' },
+      // stair guard rails (north edge + west return at the pocket)
+      { type: 'rect', x: 25, y: 10.85, w: 13, h: 0.15 },
+      { type: 'rect', x: 24.85, y: 11, w: 0.15, h: 3.5 },
       // deck rail
-      { type: 'poly', pts: [[5.5,0],[5.5,-7.5],[14.5,-7.5],[14.5,0]] },
-      // low eave zones
-      { type: 'rect', x: 15.7, y: 26.3, w: 6.1, h: 12.9, label: 'low eave' },
-      { type: 'rect', x: 0.6, y: 31, w: 2.2, h: 8.2, label: '' },
+      { type: 'poly', pts: [[45.5,0.5],[53.5,0.5]] },
+      { type: 'poly', pts: [[53.5,0.5],[53.5,11]] },
+      { type: 'poly', pts: [[53.5,11],[54,11.5]] },
+      // low-eave knee-wall zones (limited headroom)
+      { type: 'rect', x: 14.8, y: 16.8, w: 7, h: 5.5, label: 'low eave' },
+      { type: 'rect', x: 22.2, y: 16.8, w: 2.6, h: 5.5, label: '' },
     ],
 
     dims: [
-      { from: [0,39.5],   to: [22.5,39.5], offset: 2.3,  label: "22′6″ overall" },
-      { from: [22.5,0],   to: [22.5,39.5], offset: -2.3, label: "39′6″ overall" },
-      { from: [5.5,-7.5], to: [14.5,-7.5], offset: -1.5, label: "9′0″" },
-      { from: [14.5,-7.5],to: [14.5,0],    offset: -1.5, label: "7′6″" },
-      { from: [0.5,9.3],  to: [15.5,9.3],  offset: 0.15, label: "15′0″" },
-      { from: [1.7,0.5],  to: [1.7,11],    offset: 0.15, label: "10′6″" },
-      { from: [15.5,12.9],to: [22,12.9],   offset: 0.15, label: "6′6″" },
-      { from: [21.2,0.5], to: [21.2,14.5], offset: 0.15, label: "14′0″" },
-      { from: [0.5,13.1], to: [9.5,13.1],  offset: 0.15, label: "9′0″" },
-      { from: [7,11],     to: [7,23],      offset: 0.15, label: "12′0″" },
-      { from: [0.5,29.6], to: [12.5,29.6], offset: 0.15, label: "12′0″" },
-      { from: [1.5,23],   to: [1.5,30.5],  offset: 0.15, label: "7′6″" },
-      { from: [3,38.2],   to: [15.5,38.2], offset: 0.15, label: "12′6″" },
-      { from: [4.3,30.5], to: [4.3,39],    offset: 0.15, label: "8′6″" },
-      { from: [15.5,25.2],to: [22,25.2],   offset: 0.15, label: "6′6″" },
-      { from: [21.7,20.5],to: [21.7,26],   offset: 0.15, label: "5′6″" },
+      { from: [0,23],     to: [54,23],     offset: 2.4,  label: "54′0″ overall" },
+      { from: [0,0],      to: [0,23],      offset: 2.4,  label: "23′0″ overall" },
+      { from: [45.5,0.5], to: [53.5,0.5],  offset: -1.5, label: "8′0″" },
+      { from: [53.5,0.5], to: [53.5,11],   offset: -1.5, label: "10′6″" },
+      { from: [0.5,12.8], to: [11,12.8],   offset: 0.15, label: "10′6″" },
+      { from: [1.3,0.5],  to: [1.3,13.5],  offset: 0.15, label: "13′0″" },
+      { from: [12,1.4],   to: [22,1.4],    offset: 0.15, label: "10′0″" },
+      { from: [12.8,0.5], to: [12.8,13.5], offset: 0.15, label: "13′0″" },
+      { from: [22.5,6.4], to: [45.5,6.4],  offset: 0.15, label: "23′6″" },
+      { from: [44.8,0.5], to: [44.8,11.5], offset: 0.15, label: "11′0″" },
+      { from: [25.5,15.1],to: [38,15.1],   offset: 0.15, label: "13′0″" },
+      { from: [26,14.5],  to: [26,22.5],   offset: 0.15, label: "8′0″" },
+      { from: [0.5,18.75], to: [11.5,18.75], offset: 0.15, label: "11′0″" },
+      { from: [10.9,16.5],to: [10.9,22.5], offset: 0.15, label: "6′0″" },
+      { from: [41,14.9],  to: [54,14.9],   offset: 0.15, label: "16′0″ wing" },
+      { from: [53.3,11.5],to: [53.3,22.5], offset: 0.15, label: "11′0″" },
     ],
   },
 
   nodes: [
-    { id: 'entry', image: 'frames/entry.jpg', room: 'Entry', pos: [11.2,18.8], yaw: 270,
+    { id: 'entry', image: 'frames/entry.jpg', room: 'Entry', pos: [26.5,12.7], yaw: 0,
       links: [ { to: 'stairs', x: 34, y: 58, kind: 'walk', label: 'Up the stairs' } ] },
 
-    { id: 'stairs', image: 'frames/stairs.jpg', room: 'Stairs', pos: [11.2,16.5], yaw: 270,
+    { id: 'stairs', image: 'frames/stairs.jpg', room: 'Stairs', pos: [30,12.7], yaw: 0,
       links: [ { to: 'stairs-top', x: 50, y: 42, kind: 'walk', label: 'Keep climbing' },
                { to: 'entry', x: 50, y: 93, kind: 'back', label: 'Entry' } ] },
 
-    { id: 'stairs-top', image: 'frames/stairs-top.jpg', room: 'Stairs', pos: [11.2,12], yaw: 270,
+    { id: 'stairs-top', image: 'frames/stairs-top.jpg', room: 'Stairs', pos: [36,12.7], yaw: 0,
       links: [ { to: 'landing', x: 52, y: 45, kind: 'walk', label: 'Step up' },
                { to: 'stairs', x: 50, y: 93, kind: 'back', label: 'Back down' } ] },
 
-    { id: 'landing', image: 'frames/landing.jpg', room: 'Landing', pos: [14.2,11.5], yaw: 270,
+    { id: 'landing', image: 'frames/landing.jpg', room: 'Landing', pos: [39,9.5], yaw: 320,
       links: [ { to: 'living', x: 70, y: 58, kind: 'walk', label: 'Living Room' },
-               { to: 'landing-south', x: 12, y: 78, kind: 'turn', side: 'left', label: 'Hallway' },
+               { to: 'landing-south', x: 12, y: 78, kind: 'turn', side: 'left', label: 'Hall & bedrooms' },
                { to: 'stairs-top', x: 45, y: 92, kind: 'back', label: 'Downstairs' } ] },
 
-    { id: 'living', image: 'frames/living.jpg', room: 'Living Room', pos: [11,9], yaw: 270,
+    { id: 'living', image: 'frames/living.jpg', room: 'Living Room', pos: [35,6], yaw: 0,
       links: [ { to: 'deck', x: 47, y: 44, kind: 'door', label: 'Deck' },
                { to: 'dining', x: 84, y: 58, kind: 'turn', label: 'Kitchen' },
-               { to: 'living-return', x: 55, y: 78, kind: 'walk', label: 'Cross the room' },
+               { to: 'living-return', x: 55, y: 78, kind: 'walk', label: 'Toward the deck' },
                { to: 'landing-south', x: 50, y: 93, kind: 'back', label: 'Landing' } ] },
 
-    { id: 'living-return', image: 'frames/living-return.jpg', room: 'Living Room', pos: [13.5,4], yaw: 225,
-      links: [ { to: 'deck', x: 38, y: 45, kind: 'door', label: 'Deck' },
-               { to: 'landing-south', x: 12, y: 62, kind: 'walk', label: 'Landing' },
-               { to: 'dining', x: 88, y: 70, kind: 'turn', label: 'Kitchen' },
+    { id: 'living-return', image: 'frames/living-return.jpg', room: 'Living Room', pos: [40.5,6.5], yaw: 0,
+      links: [ { to: 'deck', x: 48, y: 42, kind: 'door', label: 'Deck' },
+               { to: 'dining', x: 86, y: 66, kind: 'turn', label: 'Kitchen' },
                { to: 'living', x: 50, y: 93, kind: 'back', label: 'Back' } ] },
 
-    { id: 'deck', image: 'frames/deck.jpg', room: 'Deck', pos: [10,-2.5], yaw: 270,
+    { id: 'deck', image: 'frames/deck.jpg', room: 'Deck', pos: [48,5], yaw: 100,
       links: [ { to: 'deck-view', x: 55, y: 45, kind: 'walk', label: 'To the rail' },
-               { to: 'living', x: 50, y: 93, kind: 'back', label: 'Back inside' } ] },
+               { to: 'living-return', x: 50, y: 93, kind: 'back', label: 'Back inside' } ] },
 
-    { id: 'deck-view', image: 'frames/deck-view.jpg', room: 'Deck', pos: [10,-5.5], yaw: 250,
+    { id: 'deck-view', image: 'frames/deck-view.jpg', room: 'Deck', pos: [50.5,8.5], yaw: 120,
       links: [ { to: 'deck', x: 50, y: 92, kind: 'back', label: 'Step back' } ] },
 
-    { id: 'dining', image: 'frames/dining.jpg', room: 'Kitchen & Dining', pos: [18.5,9.5], yaw: 220,
-      links: [ { to: 'living-return', x: 26, y: 55, kind: 'walk', label: 'Living Room' },
-               { to: 'kitchen', x: 62, y: 62, kind: 'walk', label: 'Kitchen' },
-               { to: 'kitchen-view', x: 82, y: 38, kind: 'turn', label: 'Window' } ] },
+    { id: 'dining', image: 'frames/dining.jpg', room: 'Kitchen & Dining', pos: [50.5,14.5], yaw: 240,
+      links: [ { to: 'living-return', x: 62, y: 50, kind: 'walk', label: 'Living Room' },
+               { to: 'kitchen', x: 30, y: 60, kind: 'walk', label: 'Kitchen' },
+               { to: 'kitchen-view', x: 85, y: 40, kind: 'turn', label: 'Window' } ] },
 
-    { id: 'kitchen', image: 'frames/kitchen.jpg', room: 'Kitchen & Dining', pos: [17,13.5], yaw: 100,
-      links: [ { to: 'pantry', x: 9, y: 47, kind: 'door', label: 'Pantry' },
-               { to: 'dining', x: 50, y: 90, kind: 'back', label: 'Dining' } ] },
+    { id: 'kitchen', image: 'frames/kitchen.jpg', room: 'Kitchen & Dining', pos: [43.5,15], yaw: 200,
+      links: [ { to: 'pantry', x: 8, y: 45, kind: 'door', label: 'Pantry' },
+               { to: 'living-return', x: 80, y: 45, kind: 'turn', label: 'Living Room' },
+               { to: 'dining', x: 50, y: 91, kind: 'back', label: 'Dining' } ] },
 
-    { id: 'kitchen-view', image: 'frames/kitchen-view.jpg', room: 'Kitchen & Dining', pos: [17.5,2], yaw: 270,
+    { id: 'kitchen-view', image: 'frames/kitchen-view.jpg', room: 'Kitchen & Dining', pos: [52.5,14.5], yaw: 40,
       links: [ { to: 'dining', x: 50, y: 92, kind: 'back', label: 'Back' } ] },
 
-    { id: 'pantry', image: 'frames/pantry.jpg', room: 'Pantry', pos: [20.3,15.8], yaw: 90,
+    { id: 'pantry', image: 'frames/pantry.jpg', room: 'Pantry', pos: [39.3,17], yaw: 200,
       links: [ { to: 'kitchen', x: 50, y: 92, kind: 'back', label: 'Kitchen' } ] },
 
-    { id: 'landing-south', image: 'frames/landing-south.jpg', room: 'Landing', pos: [14.2,13], yaw: 90,
-      links: [ { to: 'hall', x: 52, y: 56, kind: 'walk', label: 'Hallway' },
-               { to: 'living', x: 8, y: 70, kind: 'turn', side: 'left', label: 'Living Room' },
+    { id: 'landing-south', image: 'frames/landing-south.jpg', room: 'Landing', pos: [39.5,9.8], yaw: 190,
+      links: [ { to: 'hall', x: 52, y: 56, kind: 'walk', label: 'Down the hall' },
+               { to: 'living', x: 92, y: 70, kind: 'turn', side: 'right', label: 'Living Room' },
                { to: 'stairs-top', x: 38, y: 80, kind: 'back', label: 'Downstairs' } ] },
 
-    { id: 'hall', image: 'frames/hall.jpg', room: 'Hallway', pos: [14,19.5], yaw: 90,
-      links: [ { to: 'bath', x: 38, y: 48, kind: 'door', label: 'Bathroom' },
-               { to: 'bed3', x: 76, y: 52, kind: 'door', label: 'Bedroom 3' },
-               { to: 'laundry', x: 17, y: 62, kind: 'door', label: 'Laundry' },
-               { to: 'bed2', x: 92, y: 76, kind: 'turn', side: 'right', label: 'Bedroom 2' },
-               { to: 'hall-south', x: 56, y: 72, kind: 'walk', label: 'Front Bedroom' },
+    { id: 'hall', image: 'frames/hall.jpg', room: 'Hallway', pos: [31,9], yaw: 185,
+      links: [ { to: 'bath', x: 38, y: 46, kind: 'door', label: 'Bathroom' },
+               { to: 'frontbed', x: 74, y: 50, kind: 'door', label: 'Front Bedroom' },
+               { to: 'hall-south', x: 55, y: 68, kind: 'walk', label: 'Down the hall' },
+               { to: 'bed2', x: 10, y: 76, kind: 'turn', side: 'left', label: 'Bedroom 2' },
                { to: 'landing-south', x: 50, y: 94, kind: 'back', label: 'Landing' } ] },
 
-    { id: 'hall-south', image: 'frames/hall-south.jpg', room: 'Hallway', pos: [14,27.5], yaw: 90,
-      links: [ { to: 'frontbed', x: 50, y: 55, kind: 'walk', label: 'Front Bedroom' },
+    { id: 'hall-south', image: 'frames/hall-south.jpg', room: 'Hallway', pos: [17.5,15], yaw: 185,
+      links: [ { to: 'frontbed', x: 50, y: 54, kind: 'walk', label: 'Front Bedroom' },
+               { to: 'bath', x: 26, y: 62, kind: 'door', label: 'Bathroom' },
+               { to: 'bed3', x: 80, y: 46, kind: 'door', label: 'Bedroom 3' },
+               { to: 'laundry', x: 40, y: 66, kind: 'door', label: 'Laundry' },
                { to: 'hall', x: 50, y: 93, kind: 'back', label: 'Back up the hall' } ] },
 
-    { id: 'bath', image: 'frames/bath.jpg', room: 'Bathroom', pos: [17,23], yaw: 30,
+    { id: 'bath', image: 'frames/bath.jpg', room: 'Bathroom', pos: [8.5,19.5], yaw: 185,
       links: [ { to: 'bath-window', x: 62, y: 42, kind: 'walk', label: 'By the window' },
-               { to: 'hall', x: 50, y: 93, kind: 'back', label: 'Hallway' } ] },
+               { to: 'hall-south', x: 50, y: 93, kind: 'back', label: 'Hallway' } ] },
 
-    { id: 'bath-window', image: 'frames/bath-window.jpg', room: 'Bathroom', pos: [20.5,22.8], yaw: 30,
+    { id: 'bath-window', image: 'frames/bath-window.jpg', room: 'Bathroom', pos: [2.8,18.8], yaw: 200,
       links: [ { to: 'bath', x: 50, y: 92, kind: 'back', label: 'Step back' } ] },
 
-    { id: 'laundry', image: 'frames/laundry.jpg', room: 'Laundry', pos: [17,19.2], yaw: 0,
-      links: [ { to: 'hall', x: 50, y: 92, kind: 'back', label: 'Hallway' } ] },
+    { id: 'laundry', image: 'frames/laundry.jpg', room: 'Laundry', pos: [13,17.8], yaw: 110,
+      links: [ { to: 'hall-south', x: 50, y: 92, kind: 'back', label: 'Hallway' } ] },
 
-    { id: 'bed3', image: 'frames/bed3.jpg', room: 'Bedroom 3', pos: [6,26.8], yaw: 190,
+    { id: 'bed3', image: 'frames/bed3.jpg', room: 'Bedroom 3', pos: [17,9], yaw: 280,
       links: [ { to: 'bed3-view', x: 35, y: 42, kind: 'walk', label: 'Window view' },
-               { to: 'hall', x: 50, y: 93, kind: 'back', label: 'Hallway' } ] },
+               { to: 'hall-south', x: 50, y: 93, kind: 'back', label: 'Hallway' } ] },
 
-    { id: 'bed3-view', image: 'frames/bed3-view.jpg', room: 'Bedroom 3', pos: [2.8,26.8], yaw: 195,
+    { id: 'bed3-view', image: 'frames/bed3-view.jpg', room: 'Bedroom 3', pos: [16.5,2.5], yaw: 280,
       links: [ { to: 'bed3', x: 50, y: 92, kind: 'back', label: 'Step back' } ] },
 
-    { id: 'bed2', image: 'frames/bed2.jpg', room: 'Bedroom 2', pos: [5.5,16.5], yaw: 235,
+    { id: 'bed2', image: 'frames/bed2.jpg', room: 'Bedroom 2', pos: [30.5,17.5], yaw: 100,
       links: [ { to: 'bed2-window', x: 38, y: 55, kind: 'walk', label: 'Window' },
                { to: 'bed2-storage', x: 88, y: 60, kind: 'door', label: 'Eave storage' },
                { to: 'hall', x: 50, y: 93, kind: 'back', label: 'Hallway' } ] },
 
-    { id: 'bed2-storage', image: 'frames/bed2-storage.jpg', room: 'Bedroom 2', pos: [2.5,13.8], yaw: 215,
+    { id: 'bed2-storage', image: 'frames/bed2-storage.jpg', room: 'Bedroom 2', pos: [34,20.5], yaw: 140,
       links: [ { to: 'bed2', x: 50, y: 92, kind: 'back', label: 'Step back' } ] },
 
-    { id: 'bed2-window', image: 'frames/bed2-window.jpg', room: 'Bedroom 2', pos: [1.8,16.8], yaw: 195,
+    { id: 'bed2-window', image: 'frames/bed2-window.jpg', room: 'Bedroom 2', pos: [32.5,21], yaw: 95,
       links: [ { to: 'bed2', x: 50, y: 92, kind: 'back', label: 'Step back' } ] },
 
-    { id: 'frontbed', image: 'frames/frontbed.jpg', room: 'Front Bedroom', pos: [9.5,33.5], yaw: 90,
+    { id: 'frontbed', image: 'frames/frontbed.jpg', room: 'Front Bedroom', pos: [7,7.5], yaw: 185,
       links: [ { to: 'frontbed-view', x: 52, y: 45, kind: 'walk', label: 'Street view' },
                { to: 'hall-south', x: 50, y: 93, kind: 'back', label: 'Hallway' } ] },
 
-    { id: 'frontbed-view', image: 'frames/frontbed-view.jpg', room: 'Front Bedroom', pos: [9.5,37.8], yaw: 90,
+    { id: 'frontbed-view', image: 'frames/frontbed-view.jpg', room: 'Front Bedroom', pos: [2,6.5], yaw: 185,
       links: [ { to: 'frontbed', x: 50, y: 92, kind: 'back', label: 'Step back' } ] },
   ],
 };

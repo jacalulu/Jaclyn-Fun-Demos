@@ -35,4 +35,9 @@ python3 -m http.server 8080
    path, plus turns and doorways, and linked into a navigation graph.
 3. The floor plan was reconstructed from the video using the ultrawide
    (0.5×, ~123° FOV) geometry and standard architectural references
-   (door widths, counter heights/depths, appliance sizes) for scale.
+   (door widths, counter heights/depths, appliance sizes) for scale, then
+   cross-referenced with public records for the building (a 3-unit Victorian
+   built 1906 on Andover St, Bernal Heights; top-floor flat listed ≈1,320 sq ft).
+   The L-shaped footprint (kitchen/dining wing + roof deck in the rear notch),
+   window orientations (verified against the 4 PM sun direction in the video),
+   and knee-wall eave zones come from that combined analysis.
