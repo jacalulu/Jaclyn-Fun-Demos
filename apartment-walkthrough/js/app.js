@@ -57,34 +57,28 @@
     const out = frames[front];
     const inn = frames[1 - front];
 
-    // zoom the outgoing frame toward the clicked hotspot for a dolly feel
+    // warp toward the clicked hotspot: the outgoing view accelerates and
+    // defocuses into that point while the next view lands softly
     const ox = hotspotPct ? hotspotPct[0] : 50;
     const oy = hotspotPct ? hotspotPct[1] : 50;
     out.style.transformOrigin = `${ox}% ${oy}%`;
-    out.classList.add('zooming');
-
-    inn.classList.remove('zooming', 'settling');
     inn.style.transformOrigin = '50% 50%';
-    inn.style.transform = 'scale(1.07)';
 
     const begin = () => {
-      // force layout so the starting transform sticks before transitioning
       void inn.offsetWidth;
-      inn.classList.add('settling');
-      inn.classList.add('visible');
-      inn.style.transform = 'scale(1)';
-      out.style.transform = 'scale(1.18)';
-      out.classList.remove('visible');
+      inn.classList.add('visible', 'warp-in');
+      out.classList.add('warp-out');
 
       setTimeout(() => {
-        out.classList.remove('zooming', 'settling');
-        out.style.transform = 'scale(1)';
+        out.classList.remove('warp-out', 'visible');
+        inn.classList.remove('warp-in');
+        out.style.transformOrigin = '50% 50%';
         front = 1 - front;
         transitioning = false;
         history.push(current.id);
         setNode(next, {});
         renderHotspots(next);
-      }, 560);
+      }, 650);
     };
 
     if (inn.src !== absolute(next.image)) {
@@ -166,10 +160,16 @@
       btn.textContent = n.room;
       btn.dataset.room = n.room;
       btn.addEventListener('click', () => {
+        nav.classList.add('hidden');
+        $('btn-rooms').textContent = 'Rooms ▾';
         const target = TOUR.nodes.find((x) => x.room === n.room);
         if (target && target !== current) goTo(target.id, [50, 55]);
       });
       nav.appendChild(btn);
+    });
+    $('btn-rooms').addEventListener('click', () => {
+      const hidden = nav.classList.toggle('hidden');
+      $('btn-rooms').textContent = hidden ? 'Rooms ▾' : 'Rooms ▴';
     });
   }
 
@@ -183,7 +183,7 @@
   const MINI_SCALE = 3.4;
   function renderMinimap() {
     if (!TOUR.plan) return;
-    const holder = $('minimap');
+    const holder = $('minimap-body');
     const r = renderFloorPlan(TOUR.plan, { scale: MINI_SCALE, mini: true, showDims: false, pad: 0.8 });
     const extra = [];
     // node dots
@@ -234,7 +234,40 @@
   $('btn-plan').addEventListener('click', openPlan);
   $('btn-close-plan').addEventListener('click', closePlan);
   $('chk-dims').addEventListener('change', renderPlanOverlay);
-  $('minimap').addEventListener('click', openPlan);
+  $('minimap-body').addEventListener('click', openPlan);
+  $('btn-mini').addEventListener('click', (e) => {
+    e.stopPropagation();
+    const collapsed = $('minimap').classList.toggle('collapsed');
+    $('btn-mini').textContent = collapsed ? '□' : '–';
+    $('btn-mini').title = collapsed ? 'Expand map' : 'Collapse map';
+  });
+
+  // drag the minimap anywhere on screen
+  (function () {
+    const mini = $('minimap');
+    const head = $('minimap-head');
+    let sx = 0, sy = 0, ox = 0, oy = 0, dragging = false;
+    head.addEventListener('pointerdown', (e) => {
+      if (e.target === $('btn-mini')) return;
+      dragging = true;
+      const r = mini.getBoundingClientRect();
+      mini.style.left = r.left + 'px';
+      mini.style.top = r.top + 'px';
+      mini.style.bottom = 'auto';
+      sx = e.clientX; sy = e.clientY; ox = r.left; oy = r.top;
+      head.setPointerCapture(e.pointerId);
+      e.preventDefault();
+    });
+    head.addEventListener('pointermove', (e) => {
+      if (!dragging) return;
+      const r = mini.getBoundingClientRect();
+      const nx = Math.min(Math.max(0, ox + e.clientX - sx), window.innerWidth - r.width);
+      const ny = Math.min(Math.max(0, oy + e.clientY - sy), window.innerHeight - r.height);
+      mini.style.left = nx + 'px';
+      mini.style.top = ny + 'px';
+    });
+    head.addEventListener('pointerup', () => { dragging = false; });
+  })();
   $('plan-overlay').addEventListener('click', (e) => { if (e.target === $('plan-overlay')) closePlan(); });
   $('btn-fs').addEventListener('click', () => {
     if (document.fullscreenElement) document.exitFullscreen();

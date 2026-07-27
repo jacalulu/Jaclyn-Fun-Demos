@@ -25,9 +25,18 @@
       </div>
     </header>
 
-    <nav id="room-nav"></nav>
+    <div id="rooms-wrap">
+      <nav id="room-nav" class="hidden"></nav>
+      <button id="btn-rooms" class="btn">Rooms ▾</button>
+    </div>
 
-    <div id="minimap" title="Click to expand floor plan"></div>
+    <div id="minimap">
+      <div id="minimap-head">
+        <span class="grip">⠿</span><span class="mini-title">Map</span>
+        <button id="btn-mini" title="Collapse map">–</button>
+      </div>
+      <div id="minimap-body" title="Click to expand floor plan"></div>
+    </div>
 
     <div id="hint">Click the arrows to walk through &middot; ← → ↑ keys work too</div>
 
