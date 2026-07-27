@@ -24,10 +24,11 @@
     opts = Object.assign({ scale: 22, showDims: true, mini: false, pad: null }, opts || {});
     const s = opts.scale;
     const pad = opts.pad != null ? opts.pad : (opts.showDims ? 3.2 : 1.0); // feet of padding
+    const x0 = plan.bounds.x0 || 0, y0 = plan.bounds.y0 || 0;
     const W = (plan.bounds.w + pad * 2) * s;
     const H = (plan.bounds.h + pad * 2) * s;
-    const X = (v) => fmt((v + pad) * s);
-    const Y = (v) => fmt((v + pad) * s);
+    const X = (v) => fmt((v - x0 + pad) * s);
+    const Y = (v) => fmt((v - y0 + pad) * s);
     const wallW = (plan.wallThickness || 0.4) * s;
     const parts = [];
 
@@ -135,7 +136,7 @@
     }
 
     parts.push('</svg>');
-    return { svg: parts.join('\n'), toPx: (p) => [(p[0] + pad) * s, (p[1] + pad) * s], width: W, height: H };
+    return { svg: parts.join('\n'), toPx: (p) => [(p[0] - x0 + pad) * s, (p[1] - y0 + pad) * s], width: W, height: H };
   }
 
   window.renderFloorPlan = renderFloorPlan;
