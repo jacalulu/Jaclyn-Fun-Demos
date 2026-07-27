@@ -91,10 +91,43 @@ after the third.
 - **Annotated-overlay QA sheets** before shipping — caught a dozen misplaced
   hotspots in one look.
 
-## Ground truth status
+## Ground truth: the professional plan vs the best video-only attempt
 
-No professional floor plan was published with the 2026 listing (Compass page
-data: `shouldShowFloorplans: false`). Best available ground truth: the city
-LiDAR envelope (used), the owner's corrections (used), and — if located — the
-lender appraisal sketch from the purchase, which would settle remaining
-interior-dimension uncertainty (hall width, exact bedroom split, bath depth).
+The owner later provided the marketing floor plan (Compass carried no floor
+plan; it came from a property page the owner had). Scored against it, the
+final video-only reconstruction (v4) got:
+
+**Right (100% of the room graph):** envelope 55×23.5; every room, adjacency,
+and door relation — hall walking axially into the primary, bath suite off the
+stair landing with the laundry inside it, Bedrooms 2/3 directly opposite
+across the hall, kitchen/living pass-through peninsula, deck off the living
+room east; and the north/south side assignment.
+
+**Wrong (geometry within the graph):**
+1. **Stair axis** — drew it east–west along the building; it actually runs
+   north–south *across* the plan, rising to a landing at the north wall.
+   Never verified the climb's own frames for orientation anchors (which walls
+   the run parallels, where its skylight/window sit).
+2. **Primary bedroom depth** — 10.5 ft drawn vs ~19 ft actual. Ultrawide
+   lenses compress big rooms the most; depth was "allocated" evenly along the
+   hall instead of measured per-room against known objects.
+3. **Invented an L-wing** — the interior is a clean rectangle; the deck (and
+   its rear stair) are appended *beyond* the rear wall over the lower unit.
+   Lesson: an open-air deck at the top floor doesn't require an interior
+   notch; check whether it simply sits past the end wall.
+4. **Missed footprint quirks the plan shows**: the NW void strip under the
+   roof slope, the south light well that gives Bedroom 3 its window (the
+   video's "gap view" — the well was visible in the footage and misread as a
+   side-yard gap), the 45° chamfered walk-in closet at the kitchen corner,
+   and walk-in closets (a 4-ft band) in the primary instead of wall closets.
+5. **Tub vs shower** — glass sliders hid a tub below the sightline.
+
+**Additional lessons for the toolkit:**
+- **Marketing compass roses lie.** This one pointed "N" along the 55-ft axis
+  of a 25-ft-wide lot — physically impossible. Orient from parcel + sun +
+  skyline, never from a decorative rose.
+- **Measure a provided plan by pixels against a surveyed envelope** (here
+  ~7 px/ft) before copying anything from it; its own disclaimer says
+  "approximate."
+- **Dwell time ≈ importance, not size.** The camera lingered in small rooms
+  and swept the big primary quickly; don't infer area from tour attention.
