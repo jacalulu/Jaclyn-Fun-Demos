@@ -124,6 +124,19 @@
     back: '<svg viewBox="0 0 24 24"><path d="M5 10 L12 17 L19 10"/></svg>',
   };
 
+  // Hotspot coordinates are % of the IMAGE, not the viewport, so arrows stay
+  // glued to the doorway/floor they mark no matter how the photo is cropped.
+  function imageToScreen(xPct, yPct) {
+    const stage = $('stage');
+    const img = frames[front];
+    const iw = img.naturalWidth || 844, ih = img.naturalHeight || 1500;
+    const w = stage.clientWidth, h = stage.clientHeight;
+    const scale = Math.max(w / iw, h / ih);
+    const dw = iw * scale, dh = ih * scale;
+    const ox = (w - dw) / 2, oy = (h - dh) / 2;
+    return [ox + (xPct / 100) * dw, oy + (yPct / 100) * dh];
+  }
+
   function renderHotspots(node) {
     clearHotspots();
     const holder = $('hotspots');
@@ -131,8 +144,13 @@
       const b = document.createElement('button');
       const kind = l.kind || 'walk';
       b.className = `hotspot ${kind}`;
-      b.style.left = l.x + '%';
-      b.style.top = l.y + '%';
+      let [px, py] = imageToScreen(l.x, l.y);
+      // keep arrows on-screen even when the cover-crop cuts off their anchor
+      const stage = $('stage');
+      px = Math.min(Math.max(px, 56), stage.clientWidth - 56);
+      py = Math.min(Math.max(py, 110), stage.clientHeight - 72);
+      b.style.left = px + 'px';
+      b.style.top = py + 'px';
       const icon = kind === 'turn' && l.side === 'left' ? ICONS.turnl : (ICONS[kind] || ICONS.walk);
       b.innerHTML = `<span class="disc">${icon}</span><span class="tag">${l.label || defaultLabel(l)}</span>`;
       b.addEventListener('click', () => goTo(l.to, [l.x, l.y]));
@@ -273,6 +291,8 @@
     if (document.fullscreenElement) document.exitFullscreen();
     else document.documentElement.requestFullscreen();
   });
+
+  window.addEventListener('resize', () => { if (current && !transitioning) renderHotspots(current); });
 
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') return closePlan();
