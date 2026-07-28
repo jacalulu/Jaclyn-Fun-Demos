@@ -65,14 +65,21 @@ Phase 0-2 and drawing geometry too early.
   each; the discrepancy room is usually the big one the ultrawide shrank.
 - Camera dwell time ≠ room size.
 
-## Phase 5 — Independent cross-check
-- Run a second, video-native model over the FULL video (e.g. Gemini via
-  OpenRouter, ~8 fps 432px transcode keeps it under upload limits) with a
-  structured prompt: timeline, per-room doorways with wall sides, hall
-  topology, closets, windows + what's visible outside, size ranking.
-- Treat disagreements as pointers back to pixels, not as authority — its
-  room-relative descriptions tend to beat your global-frame reasoning, but
-  its global left/right needs the same verification yours does.
+## Phase 5 — Independent Gemini cross-check (REQUIRED, not optional)
+- Always run **Gemini 2.5 Pro** (`google/gemini-2.5-pro` via OpenRouter,
+  `OPENROUTER_API_KEY` env var — configured in this environment) over the
+  FULL video before finalizing any layout. Video-native attention catches
+  continuity relationships that frame sampling misses; on the Andover
+  project it correctly flagged the bath/laundry suite and the opposite-door
+  bedrooms while frame-based analysis had them wrong.
+- Transcode first so it fits one request: `ffmpeg -vf "scale=432:-2,fps=8"
+  -crf 30 -an` (~4 min video → ~8 MB).
+- Use a structured prompt: timeline, per-room doorways with wall sides
+  relative to entry, hall topology and what's at its end, closets, windows +
+  what's visible outside, bedroom size ranking, footprint oddities.
+- Reconcile, don't defer: treat disagreements as pointers back to pixels.
+  Its room-relative descriptions tend to beat global-frame reasoning; its
+  global left/right needs the same two-cue verification yours does.
 
 ## Phase 6 — Output QA (before showing anyone)
 - Floor plan: render and eyeball against the fingerprint table and doorway
