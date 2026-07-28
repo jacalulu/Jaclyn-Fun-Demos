@@ -1,0 +1,192 @@
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --accent: #14b8a6;
+  --ink: #0f172a;
+  --panel: rgba(15, 23, 42, 0.72);
+  --panel-blur: blur(10px);
+}
+
+html, body { height: 100%; overflow: hidden; background: #000; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+
+#viewer { position: fixed; inset: 0; }
+
+/* ---- stage / frames ---- */
+#stage { position: absolute; inset: 0; overflow: hidden; }
+.frame {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  object-fit: cover; user-select: none;
+  opacity: 0; transform: scale(1);
+  will-change: opacity, transform;
+}
+.frame.visible { opacity: 1; }
+
+/* teleport transition: accelerate into the clicked spot, land softly */
+.frame.warp-out { animation: warpOut 0.62s cubic-bezier(0.55, 0, 0.85, 0.36) forwards; z-index: 1; }
+.frame.warp-in  { animation: warpIn 0.66s cubic-bezier(0.16, 0.66, 0.22, 1) forwards; z-index: 2; }
+@keyframes warpOut {
+  from { transform: scale(1); filter: blur(0) brightness(1); opacity: 1; }
+  to   { transform: scale(1.65); filter: blur(14px) brightness(1.2); opacity: 0; }
+}
+@keyframes warpIn {
+  0%   { transform: scale(0.86); filter: blur(12px) brightness(1.12); opacity: 0; }
+  40%  { opacity: 1; }
+  100% { transform: scale(1); filter: blur(0) brightness(1); opacity: 1; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .frame.warp-out { animation: plainOut 0.35s ease forwards; }
+  .frame.warp-in  { animation: plainIn 0.35s ease forwards; }
+  @keyframes plainOut { to { opacity: 0; } }
+  @keyframes plainIn  { from { opacity: 0; } to { opacity: 1; } }
+}
+
+/* ---- hotspots ---- */
+#hotspots { position: absolute; inset: 0; pointer-events: none; }
+.hotspot {
+  position: absolute; transform: translate(-50%, -50%);
+  pointer-events: auto; cursor: pointer; border: none; background: none;
+  display: flex; flex-direction: column; align-items: center; gap: 6px;
+  transition: opacity 0.3s ease;
+}
+.hotspot .disc {
+  width: 52px; height: 52px; border-radius: 50%;
+  background: rgba(255, 255, 255, 0.22);
+  border: 2px solid rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(2px);
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.35);
+  transition: transform 0.18s ease, background 0.18s ease;
+}
+.hotspot.walk .disc { transform: perspective(240px) rotateX(52deg); }
+.hotspot:hover .disc { background: rgba(20, 184, 166, 0.55); }
+.hotspot.walk:hover .disc { transform: perspective(240px) rotateX(52deg) scale(1.12); }
+.hotspot:not(.walk):hover .disc { transform: scale(1.12); }
+.hotspot .disc svg { width: 26px; height: 26px; fill: none; stroke: #fff; stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; }
+.hotspot .tag {
+  color: #fff; font-size: 12px; font-weight: 600; letter-spacing: 0.02em;
+  background: var(--panel); padding: 3px 10px; border-radius: 999px;
+  white-space: nowrap; text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+  opacity: 0; transform: translateY(-2px); transition: opacity 0.15s ease;
+}
+.hotspot:hover .tag { opacity: 1; }
+.hotspot.door .tag, .hotspot.turn .tag { opacity: 0.95; }
+
+/* ---- chrome ---- */
+#topbar {
+  position: absolute; top: 0; left: 0; right: 0;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 18px;
+  background: linear-gradient(rgba(0,0,0,0.55), transparent);
+  pointer-events: none;
+}
+#topbar .titles { display: flex; align-items: center; gap: 12px; }
+#tour-title { color: #fff; font-size: 17px; font-weight: 700; letter-spacing: -0.01em; text-shadow: 0 1px 3px rgba(0,0,0,0.6); }
+.room-chip {
+  color: #fff; font-size: 13px; font-weight: 600;
+  background: var(--panel); backdrop-filter: var(--panel-blur);
+  padding: 4px 12px; border-radius: 999px; border: 1px solid rgba(255,255,255,0.18);
+}
+.topbar-actions { display: flex; gap: 8px; pointer-events: auto; }
+
+.btn {
+  color: #fff; font-size: 13px; font-weight: 600; cursor: pointer;
+  background: var(--panel); backdrop-filter: var(--panel-blur);
+  border: 1px solid rgba(255,255,255,0.18); border-radius: 10px;
+  padding: 7px 12px; transition: background 0.15s ease;
+}
+.btn:hover { background: rgba(20, 184, 166, 0.5); }
+
+/* ---- room nav: collapsed behind a single button ---- */
+#rooms-wrap {
+  position: absolute; right: 16px; bottom: 16px;
+  display: flex; flex-direction: column; align-items: flex-end; gap: 8px;
+}
+#room-nav {
+  display: flex; gap: 6px; flex-wrap: wrap; justify-content: flex-end;
+  max-width: min(80vw, 460px);
+  background: rgba(10, 14, 22, 0.55); backdrop-filter: var(--panel-blur);
+  border: 1px solid rgba(255,255,255,0.12); border-radius: 14px;
+  padding: 10px;
+}
+#room-nav.hidden { display: none; }
+#room-nav button {
+  color: rgba(255,255,255,0.92); font-size: 12px; font-weight: 600; cursor: pointer;
+  background: var(--panel); backdrop-filter: var(--panel-blur);
+  border: 1px solid rgba(255,255,255,0.14); border-radius: 999px;
+  padding: 6px 12px; transition: background 0.15s ease;
+}
+#room-nav button:hover { background: rgba(20,184,166,0.5); }
+#room-nav button.active { background: var(--accent); border-color: var(--accent); color: #04211d; }
+
+/* ---- minimap: draggable + collapsible ---- */
+#minimap {
+  position: absolute; left: 16px; bottom: 16px;
+  background: rgba(255, 255, 255, 0.88);
+  border-radius: 12px; overflow: hidden;
+  box-shadow: 0 6px 24px rgba(0,0,0,0.4);
+  opacity: 0.85; transition: opacity 0.15s ease;
+  touch-action: none;
+}
+#minimap:hover { opacity: 1; }
+#minimap-head {
+  display: flex; align-items: center; gap: 6px;
+  padding: 3px 6px 3px 8px; background: #eceef2;
+  font-size: 11px; font-weight: 600; color: #5b6472;
+  cursor: grab; user-select: none;
+}
+#minimap-head:active { cursor: grabbing; }
+#minimap-head .grip { opacity: 0.6; letter-spacing: -1px; }
+#btn-mini {
+  margin-left: auto; border: none; background: transparent; cursor: pointer;
+  color: #5b6472; font-size: 14px; font-weight: 700; line-height: 1;
+  padding: 1px 5px; border-radius: 6px;
+}
+#btn-mini:hover { background: #dde1e8; }
+#minimap-body { padding: 6px; cursor: pointer; }
+#minimap-body svg { display: block; }
+#minimap.collapsed #minimap-body { display: none; }
+#minimap.collapsed { opacity: 0.75; }
+
+/* ---- hint ---- */
+#hint {
+  position: absolute; top: 64px; left: 50%; transform: translateX(-50%);
+  color: rgba(255,255,255,0.95); font-size: 13px;
+  background: var(--panel); backdrop-filter: var(--panel-blur);
+  padding: 7px 16px; border-radius: 999px;
+  transition: opacity 0.8s ease; pointer-events: none;
+}
+#hint.faded { opacity: 0; }
+
+/* ---- floor plan overlay ---- */
+#plan-overlay {
+  position: absolute; inset: 0; z-index: 30;
+  background: rgba(10, 14, 22, 0.78); backdrop-filter: blur(6px);
+  display: flex; align-items: center; justify-content: center; padding: 24px;
+}
+#plan-overlay.hidden { display: none; }
+#plan-card {
+  background: #fbfaf7; border-radius: 18px; padding: 18px 22px 14px;
+  max-width: min(94vw, 1040px); max-height: 92vh; overflow: auto;
+  box-shadow: 0 18px 60px rgba(0,0,0,0.5);
+}
+#plan-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; gap: 16px; }
+#plan-head h2 { font-size: 18px; color: var(--ink); letter-spacing: -0.01em; }
+#plan-head .toggle { font-size: 13px; color: #475569; margin-right: 10px; user-select: none; cursor: pointer; }
+#plan-head .btn { color: #334155; background: #eef0f4; border: 1px solid #dfe3ea; }
+#plan-head .btn:hover { background: #e2e8f0; }
+#plan-svg-holder { overflow: auto; }
+#plan-svg-holder svg { display: block; margin: 0 auto; max-width: 100%; max-height: 72vh; width: auto; height: auto; }
+#plan-note { font-size: 12px; color: #64748b; margin-top: 10px; line-height: 1.5; }
+
+/* ---- empty state ---- */
+#empty-state {
+  position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+  color: rgba(255,255,255,0.7); font-size: 15px;
+}
+#empty-state.hidden { display: none; }
+
+@media (max-width: 640px) {
+  #tour-title { font-size: 14px; }
+  #hint { display: none; }
+  .hotspot .disc { width: 44px; height: 44px; }
+}
